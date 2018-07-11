@@ -16,10 +16,7 @@ namespace NestedArrays2Flat
                     {
                         1, 2, new object[]
                         {
-                            3,1, 2, new object[]
-                            {
-                                3
-                            }
+                            3
                         }
                     }, 4
                 }
@@ -44,11 +41,11 @@ namespace NestedArrays2Flat
         /// <summary>
         /// Flating a nested array. It works fot simple or complicated nested arrays
         /// </summary>
-        /// <param name="arrInput"></param>
-        /// <returns></returns>
-        public static int[] ToFlatArray(this object[] arrInput)
+        /// <param name="arrNested">Nestead Array eq: [[1,2,[3]],4]</param>
+        /// <returns>Flatten Array</returns>
+        public static int[] ToFlatArray(this object[] arrNested)
         {
-           return  new ArrayTools().ToFlatArray(arrInput);
+            return new ArrayTools().ToFlatArray(arrNested);
         }
     }
 
@@ -60,35 +57,38 @@ namespace NestedArrays2Flat
         /// <summary>
         /// This list will be filled by ToFlatArray method in each step of its recursive functionality and keep the Flattent Array result as List.
         /// </summary>
-        private List<int> _flatArrayResult;
+        private List<int> _flatten;
 
         /// <summary>
         /// Flating a nested array. It works fot simple or complicated nested arrays
         /// </summary>
-        /// <param name="arrNested"></param>
-        /// <returns></returns>
+        /// <param name="arrNested">Nestead Array eq: [[1,2,[3]],4]</param>
+        /// <returns>Flatten Array</returns>
         public int[] ToFlatArray(object[] arrNested)
         {
             if (arrNested == null)
             {
                 throw new ArgumentNullException($"Error: {nameof(arrNested)} is null in {nameof(ToFlatArray)} extension method!");
             }
-            if (_flatArrayResult == null)
+            if (_flatten == null)
             {
-                _flatArrayResult = new List<int>();
+                _flatten = new List<int>();
             }
+            // Loop over each item of array
             foreach (var item in arrNested)
             {
                 if (item.GetType() == typeof(object[]))
                 {
-                    ((object[])item).ToFlatArray();
+                    //Call ToFlatArray as recursive to scan arrNested
+                    ToFlatArray((object[])item);
                 }
                 else
                 {
-                    _flatArrayResult.Add((int)item);
+                    // Adding the Leaf (int number) to the result list
+                    _flatten.Add((int)item);
                 }
             }
-            return _flatArrayResult.ToArray();
+            return _flatten.ToArray();
         }
     }
 }
