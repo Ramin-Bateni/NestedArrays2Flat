@@ -1,11 +1,14 @@
 ﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NestedArrays2Flat.Inf.Extensions;
 
-namespace NestedArrays2Flat
+namespace UnitTest
 {
-    public class Program
+    [TestClass]
+    public class UnitTest1
     {
-        static void Main(string[] args)
+        [TestMethod]
+        public void TestMethod1()
         {
             // Sample non-flat array (nested array)
             var arrSample = new object[]
@@ -22,17 +25,9 @@ namespace NestedArrays2Flat
                 }
             };
 
-            Console.WriteLine("Flating Array\n\n Input:\t[[1,2,[3]],4]");
+            var flatten=arrSample.ToFlatArray();
 
-            // Flating the array
-            var arrFlated =arrSample.ToFlatArray();
-
-            Console.WriteLine($"Output:\t[{string.Join(",", arrFlated)}]");
-
-            Console.ReadLine();
+            CollectionAssert.AreEqual(flatten, new[] {1, 2, 3, 4});
         }
     }
-
-   
-
 }
