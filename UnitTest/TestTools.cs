@@ -5,10 +5,10 @@ using NestedArrays2Flat.Inf.Extensions;
 namespace UnitTest
 {
     [TestClass]
-    public class UnitTest1
+    public class TestTools
     {
         [TestMethod]
-        public void TestMethod1()
+        public void Test_ToFlatArray()
         {
             // Sample non-flat array (nested array)
             var arrSample = new object[]
